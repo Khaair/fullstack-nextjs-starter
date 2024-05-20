@@ -19,7 +19,7 @@ export const GET = async (request: any) => {
     }
   };
 
-export const POST = async (request: { json: () => any; }) => {
+export const POST = async (request: any) => {
 
     const authCheck = await isLoggedIn(request);
     if (authCheck instanceof NextResponse) return authCheck; 

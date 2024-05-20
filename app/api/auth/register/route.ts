@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const bcrypt = require("bcrypt");
 
 
-export const POST = async (request: { json: () => any; }) => {
+export const POST = async (request: any) => {
     try {
 
         const body = await request.json();
