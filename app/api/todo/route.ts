@@ -5,11 +5,11 @@ import { NextResponse } from "next/server";
 
 
 
-export const config = {
-  api: {
-    bodyParser: false, // Disables body parsing, since we'll use req.body directly
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false, // Disables body parsing, since we'll use req.body directly
+//   },
+// };
 
 
 export const GET = async (request: any) => {
@@ -50,3 +50,5 @@ export const POST = async (request: any) => {
       console.log(err);
     }
   };
+
+  

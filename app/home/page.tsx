@@ -19,7 +19,7 @@ const HomeContainer = () => {
         }
         const result = await response.json();
         setData(result);
-      } catch (error) {
+      } catch (error : any) {
         setError(error);
       } finally {
         setLoading(false);
