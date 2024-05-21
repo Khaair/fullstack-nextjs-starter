@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 
 export const isLoggedIn = async (request: any) => {
 
-
     const authHeader = request.headers.get('Authorization');
 
     const processedToken = authHeader ? authHeader.split("Bearer ") : "";
@@ -13,7 +12,6 @@ export const isLoggedIn = async (request: any) => {
         return NextResponse.json({ error: "Unauthorized access - Token not provided" }, { status: 401 });
 
     }
-
     try {
         const user =
             processedToken && processedToken[1]
