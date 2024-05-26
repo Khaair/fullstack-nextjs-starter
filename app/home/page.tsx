@@ -1,36 +1,62 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react";
+import { fetchAdminBlogListHandler } from "@/services/todo/todo";
+import React, { useCallback, useEffect, useState } from "react";
 
 const HomeContainer = () => {
+  
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // Function to fetch data
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://fullstack-nextjs-starter-g1nn-9o4m3sgm1-khaairs-projects.vercel.app/api/todo"
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  const [getallBlogs, setallBlogs] = useState<any>({
+    loading: false,
+    data: null,
+  });
+
+  const fetchBlogs: () => Promise<void> = useCallback(async () => {
+    if (true) {
+      await setallBlogs({ loading: true, data: null });
+      await fetchAdminBlogListHandler().then((res) => {
+        console.log("ressss", res);
+        if (res?.status === 200) {
+          setallBlogs({
+            loading: false,
+            data: res?.data,
+          });
+        } else {
+          setallBlogs({
+            loading: false,
+            data: null,
+          });
         }
-        const result = await response.json();
-        setData(result);
-      } catch (error : any) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+      });
+    }
   }, []);
+  useEffect(() => {
+    fetchBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchBlogs]);
+  return (
+    <>
+      {getallBlogs?.data?.map((item: any, index: any) => {
+        return (
+          <div key={index}>
+            <h5>{item?.name}</h5>
+          </div>
+        );
+      })}
+      {
+        getallBlogs?.data?.length>0 &&(
+          <pre>
+          <code>{JSON.stringify(getallBlogs, null, 4)}</code>
+        </pre>
 
-  console.log("data", data);
-  return <h5 className="text-[red]">Home here</h5>;
+        )
+      }
+     
+    </>
+  );
 };
 
 export default HomeContainer;
