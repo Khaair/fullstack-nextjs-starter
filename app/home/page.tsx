@@ -1,31 +1,34 @@
 "use client";
 
+import CarouselEx from "@/components/front-office/carosol";
+import CategoriesContainer from "@/components/front-office/categories";
+import Layout from "@/components/front-office/layout";
+import ProductsContainer from "@/components/front-office/products";
 import { fetchAdminBlogListHandler } from "@/services/todo/todo";
 import React, { useCallback, useEffect, useState } from "react";
 
 const HomeContainer = () => {
-  
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [getallBlogs, setallBlogs] = useState<any>({
+  const [getallCategories, setallCategories] = useState<any>({
     loading: false,
     data: null,
   });
 
   const fetchBlogs: () => Promise<void> = useCallback(async () => {
     if (true) {
-      await setallBlogs({ loading: true, data: null });
+      await setallCategories({ loading: true, data: null });
       await fetchAdminBlogListHandler().then((res) => {
         console.log("ressss", res);
         if (res?.status === 200) {
-          setallBlogs({
+          setallCategories({
             loading: false,
             data: res?.data,
           });
         } else {
-          setallBlogs({
+          setallCategories({
             loading: false,
             data: null,
           });
@@ -38,24 +41,17 @@ const HomeContainer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchBlogs]);
   return (
-    <>
-      {getallBlogs?.data?.map((item: any, index: any) => {
+    <Layout>
+      <CarouselEx />
+      <CategoriesContainer getallCategories={getallCategories}/>
+      {getallCategories?.data?.map((item: any, index: any) => {
         return (
           <div key={index}>
-            <h5>{item?.name}</h5>
+            <ProductsContainer item={item} />
           </div>
         );
       })}
-      {
-        getallBlogs?.data?.length>0 &&(
-          <pre>
-          <code>{JSON.stringify(getallBlogs, null, 4)}</code>
-        </pre>
-
-        )
-      }
-     
-    </>
+    </Layout>
   );
 };
 

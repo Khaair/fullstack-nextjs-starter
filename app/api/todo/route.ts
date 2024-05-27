@@ -1,15 +1,7 @@
 import { Category } from "@/lib/models/todo";
 import { connectToDb } from "@/lib/utils";
-
 import { NextResponse } from "next/server";
 
-
-
-// export const config = {
-//   api: {
-//     bodyParser: false, // Disables body parsing, since we'll use req.body directly
-//   },
-// };
 
 
 export const GET = async (request: any) => {
